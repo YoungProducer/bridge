@@ -18,7 +18,8 @@ export default function SignInForm() {
     setLoading(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log(result);
       // Redirect or show success message
     } catch (err) {
       if (err instanceof FirebaseError) {
@@ -36,7 +37,8 @@ export default function SignInForm() {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      console.log(result);
       // Redirect or show success message
     } catch (err) {
       if (err instanceof FirebaseError) {
@@ -93,7 +95,7 @@ export default function SignInForm() {
         <button
           type="submit"
           disabled={loading}
-          className="bg-foreground text-background mt-2 flex h-10 items-center justify-center rounded-full border border-solid border-transparent px-4 text-sm font-medium transition-colors hover:bg-[#383838] disabled:opacity-50 sm:h-12 sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
+          className="bg-foreground text-background mt-2 flex h-10 cursor-pointer items-center justify-center rounded-full border border-solid border-transparent px-4 text-sm font-medium transition-colors hover:bg-[#383838] disabled:opacity-50 sm:h-12 sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
         >
           {loading ? 'Signing in...' : 'Sign in'}
         </button>
@@ -114,7 +116,7 @@ export default function SignInForm() {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={loading}
-        className="flex h-10 w-full items-center justify-center gap-2 rounded-full border border-solid border-black/[.08] px-4 text-sm font-medium transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:px-5 sm:text-base dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
+        className="flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-full border border-solid border-black/[.08] px-4 text-sm font-medium transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:px-5 sm:text-base dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
       >
         <Image src="/google.svg" alt="Google logo" width={20} height={20} />
         Sign in with Google

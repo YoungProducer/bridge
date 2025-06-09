@@ -1,12 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
-import SignInForm from '../components/SignInForm';
-import SignUpForm from '../components/SignUpForm';
+import { auth } from '@/lib/firebase';
+import SignInForm from '../components/auth/SignInForm';
+import SignUpForm from '../components/auth/SignUpForm';
 
 export default function AuthPage() {
   const [formType, setFormType] = useState<'signin' | 'signup'>('signin');
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        router.push('/');
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
 
   return (
     <div className="grid min-h-screen grid-rows-[1fr_auto_1fr] items-start justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
@@ -17,7 +30,7 @@ export default function AuthPage() {
             <button
               onClick={() => setFormType('signin')}
               className={clsx(
-                'text-sm font-medium transition-colors',
+                'cursor-pointer text-sm font-medium transition-colors',
                 formType === 'signin'
                   ? 'text-black dark:text-white'
                   : 'text-black/[.6] dark:text-white/[.6]'
@@ -28,7 +41,7 @@ export default function AuthPage() {
             <button
               onClick={() => setFormType('signup')}
               className={clsx(
-                'text-sm font-medium transition-colors',
+                'cursor-pointer text-sm font-medium transition-colors',
                 formType === 'signup'
                   ? 'text-black dark:text-white'
                   : 'text-black/[.6] dark:text-white/[.6]'
