@@ -18,8 +18,7 @@ export default function SignInForm() {
     setLoading(true);
 
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      console.log(result);
+      await signInWithEmailAndPassword(auth, email, password);
       // Redirect or show success message
     } catch (err) {
       if (err instanceof FirebaseError) {
@@ -37,8 +36,7 @@ export default function SignInForm() {
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      console.log(result);
+      await signInWithPopup(auth, provider);
       // Redirect or show success message
     } catch (err) {
       if (err instanceof FirebaseError) {
